@@ -1,0 +1,82 @@
+---
+title: Pacific giant salamander size and channel location in old growth and clear
+  cut forest sections of Mack Creek, Oregon
+author: "Madeline Oliver and Lizzy Schattle"
+date: "11/23/2019"
+output: html_document
+---
+
+
+```{r setup, echo = FALSE, message = FALSE, warning = FALSE, cache = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache = FALSE)
+```
+
+
+## Introduction
+
+## Data and Methods
+
+## Results
+***
+
+
+```{r}
+# -------------------------------------------
+# Attach packages
+# -------------------------------------------
+
+library(tidyverse)
+library(janitor)
+library(here)
+library(RColorBrewer)
+library(tidyr)
+library(directlabels)
+library(plotly)
+library(effsize)
+library(kableExtra)
+
+# -------------------------------------------
+# Read in Mack Creek Vertebrates data
+# -------------------------------------------
+
+vertebrates_raw <- read_csv("mack_creek_vertebrates.csv") 
+
+vertebrates <- vertebrates_raw %>%
+  clean_names() %>%
+  filter(species == "DITE") %>%
+  select(year, sitecode, section, reach, unittype, length1, length2, weight, sampledate)
+  
+
+```
+
+### Salamander counts in Mack Creek
+
+#### Comparison of annual salamander abundance in old growth versus clear cut sections of Mack Creek
+
+```{r}
+
+
+```
+
+
+
+
+#### Comparison of salamander abundance by channel classification in old growth and clear cut sections of Mack Creek
+
+
+
+### Variation in channel location of salamanders between old growth and clear cut sections of Mack Creek
+
+
+### Salamander weights in Mack Creek
+
+####Comparison of salamander weights in clear cut versus old growth sections of Mack Creek in 2017
+
+
+#### Comparison of weights of salamanders in pools, cascades and side-channels of Mack Creek in 2017
+
+
+## Summary
+
+## References
+

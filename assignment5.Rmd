@@ -44,7 +44,11 @@ vertebrates_raw <- read_csv("mack_creek_vertebrates.csv")
 vertebrates <- vertebrates_raw %>%
   clean_names() %>%
   filter(species == "DITE") %>%
-  select(year, sitecode, section, reach, unittype, length1, length2, weight, sampledate)
+  select(year, sitecode, section, reach, unittype, length1, length2, weight, sampledate) %>%
+  mutate(date = lubridate::mdy(sampledate)) %>%
+  group_by(year, section) %>%
+  add_tally() %>%
+  ungroup()
   
 
 ```
@@ -55,6 +59,16 @@ vertebrates <- vertebrates_raw %>%
 
 ```{r}
 
+ggplot(data = vertebrates,
+       aes(x = date,
+           y = n,
+           group = section,
+           color = section)) +
+  geom_line(show.legend = FALSE) +
+  labs(x = "Year",
+       y = "Salamander Counts in Mack Creek",
+       caption = "Figure 1. Salamander abundance in old growth and clear cut sections of Mack Creek are shown from 1993 to 2017.") +
+  theme_classic()
 
 ```
 

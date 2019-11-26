@@ -41,16 +41,28 @@ library(kableExtra)
 
 vertebrates_raw <- read_csv("mack_creek_vertebrates.csv") 
 
+# Create data frame with only the data we will need to use in our analysis, clean names, lubridate date column, add a count column grouped by year and section, add columns with de-coded section and classification names
+
 vertebrates <- vertebrates_raw %>%
   clean_names() %>%
   filter(species == "DITE") %>%
-  select(year, sitecode, section, reach, unittype, length1, length2, weight, sampledate) %>%
+  select(year, sitecode, section, reach, unittype, length1, weight, sampledate) %>%
   mutate(date = lubridate::mdy(sampledate)) %>%
   group_by(year, section) %>%
   add_tally() %>%
-  ungroup()
+  ungroup() %>%
+  mutate(section1 = recode(section,
+                           CC = "Clear Cut",
+                           OG = "Old Growth"),
+         classification = recode(unittype,
+                                 C = "Cascade",
+                                 I = "Riffle",
+                                 IP = "Isolated Pools",
+                                 P = "Pool",
+                                 R = "Rapid",
+                                 S = "Step",
+                                 SC = "Side Channel"))
   
-
 ```
 
 ### Salamander counts in Mack Creek
@@ -58,13 +70,16 @@ vertebrates <- vertebrates_raw %>%
 #### Comparison of annual salamander abundance in old growth versus clear cut sections of Mack Creek
 
 ```{r}
-
+# Create linegraph of salamander abundance over time in old growth and clear cut sections
 ggplot(data = vertebrates,
-       aes(x = date,
+       aes(x = year,
            y = n,
-           group = section,
-           color = section)) +
+           group = section1,
+           color = section1)) +
   geom_line(show.legend = FALSE) +
+  xlim(1992, 2022) +
+  geom_dl(aes(label = section1), 
+          method = list(dl.trans(x = x + 0.2), "last.points", cex = 0.8)) +
   labs(x = "Year",
        y = "Salamander Counts in Mack Creek",
        caption = "Figure 1. Salamander abundance in old growth and clear cut sections of Mack Creek are shown from 1993 to 2017.") +
@@ -73,18 +88,48 @@ ggplot(data = vertebrates,
 ```
 
 
-
-
 #### Comparison of salamander abundance by channel classification in old growth and clear cut sections of Mack Creek
 
 
+```{r}
+# Filter out salamander observations where classification in Isolated Pools, then create count table of classification and section
+salamander_counts <- vertebrates %>%
+  filter(classification == c("Cascade", "Riffle", "Pool", "Rapid", "Step", "Side Channel")) %>%
+  filter(year == 2017) %>%
+  count(classification, section1) %>%
+  pivot_wider(names_from = classification, values_from = n)
 
-### Variation in channel location of salamanders between old growth and clear cut sections of Mack Creek
+
+# Make a nice contingency table with janitor adorn
+salamander_props <- salamander_counts %>% 
+  janitor::adorn_percentages(denominator = "row") %>% 
+  adorn_pct_formatting(digits = 0) %>% 
+  adorn_ns(position = "front") %>%
+  rename(Section = section1)
+
+kable(salamander_props,
+      caption = "Table 1. 2017 salamander counts by channel classification in old growth and clear cut sections of Mack Creek") %>% 
+  kable_styling()
+  
+```
+
+```{r}
+# Use chi square test to determine the significance of the difference in where in the channel salamanders are located between the two sections
+
+chi_counts <- salamander_props %>%
+  select(-Section)
+
+# Run chi-square:
+salamander_chi <- chisq.test(chi_counts)
+
+
+```
+
 
 
 ### Salamander weights in Mack Creek
 
-####Comparison of salamander weights in clear cut versus old growth sections of Mack Creek in 2017
+#### Comparison of salamander weights in clear cut versus old growth sections of Mack Creek in 2017
 
 
 #### Comparison of weights of salamanders in pools, cascades and side-channels of Mack Creek in 2017

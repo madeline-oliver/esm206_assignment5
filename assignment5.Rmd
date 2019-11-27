@@ -131,7 +131,7 @@ According to our Chi-squared test for independence, there is not a significant e
 
 ### Salamander weights in Mack Creek
 
-#### Comparison of salamander weights in clear cut versus old growth sections of Mack Creek in 2017
+#### Salamander weights in clear cut versus old growth sections in 2017
 
 ```{r}
 # We use an unpaired two sample t-test to compare salamander weights in clear cut vs. old growth sections in 2017
@@ -162,18 +162,37 @@ weight_2017_ttest
 
 ```
 
-In 2017, the mean salamander weight at the CC sites was `r round(summary_CC_2017$mean_weight, 2)`, and the mean salamander weight at the OG sites was `r round(summary_OG_2017$mean_weight, 2)`. The mean lobster size between CC sites and OG sites did not differ significantly (t(`r round(weight_2017_ttest$parameter, 2)`) = `r round(weight_2017_ttest$statistic, 2)`, p = (`r round(weight_2017_ttest$p.value, 4)`) with a small effect size of `r round(weight_2017_cohen$estimate, 2)`. 
+In 2017, the mean salamander weight at the clear cut sites was `r round(summary_CC_2017$mean_weight, 2)`, and the mean salamander weight at the old growth sites was `r round(summary_OG_2017$mean_weight, 2)`. The mean lobster size between clear cut sites and old growth sites did not differ significantly (t(`r round(weight_2017_ttest$parameter, 2)`) = `r round(weight_2017_ttest$statistic, 2)`, p = (`r round(weight_2017_ttest$p.value, 4)`) with a small effect size of `r round(weight_2017_cohen$estimate, 2)`. 
 
 
 
-#### Comparison of weights of salamanders in pools, cascades and side-channels of Mack Creek in 2017
+#### Salamanders weight in pools, cascades and side-channels in 2017
 
 ```{r}
 # We use a one-way ANOVA to compare the weights of salamanders in pools, cascades and side-channels of Mack Creek in 2017
 
+# First we visualize the distribution of weights by classification using a histogram and a qq plot
+ggplot(data = vertebrates_2017, 
+       aes(x = weight)) +
+  geom_histogram(aes(fill = classification),
+                 alpha = 0.5,
+                 show.legend = FALSE,
+                 bins = 15) +
+  facet_wrap(~classification, scales = "free")
+
+ggplot(data = vertebrates_2017, 
+       aes(sample = weight)) +
+  geom_qq(aes(color = classification),
+                 alpha = 0.5,
+                 show.legend = FALSE) +
+  facet_wrap(~classification, scales = "free")
+
+# This data does not look normally distributed, however we have a very large sample size so we will still use an ANOVA test to compare means
+
 
 
 ```
+
 
 
 ## Summary

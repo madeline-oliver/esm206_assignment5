@@ -51,7 +51,7 @@ vertebrates <- vertebrates_raw %>%
   group_by(year, section) %>%
   add_tally() %>%
   ungroup() %>%
-  mutate(section1 = recode(section,
+  mutate(Section = recode(section,
                            CC = "Clear Cut",
                            OG = "Old Growth"),
          classification = recode(unittype,
@@ -74,11 +74,11 @@ vertebrates <- vertebrates_raw %>%
 ggplot(data = vertebrates,
        aes(x = year,
            y = n,
-           group = section1,
-           color = section1)) +
+           group = Section,
+           color = Section)) +
   geom_line(show.legend = FALSE) +
   xlim(1992, 2022) +
-  geom_dl(aes(label = section1), 
+  geom_dl(aes(label = Section), 
           method = list(dl.trans(x = x + 0.2), "last.points", cex = 0.8)) +
   labs(x = "Year",
        y = "Salamander Counts in Mack Creek",
@@ -96,7 +96,7 @@ ggplot(data = vertebrates,
 salamander_counts <- vertebrates %>%
   filter(classification == c("Cascade", "Riffle", "Pool", "Rapid", "Step", "Side Channel")) %>%
   filter(year == 2017) %>%
-  count(classification, section1) %>%
+  count(classification, Section) %>%
   pivot_wider(names_from = classification, values_from = n)
 
 
@@ -105,7 +105,7 @@ salamander_props <- salamander_counts %>%
   janitor::adorn_percentages(denominator = "row") %>% 
   adorn_pct_formatting(digits = 0) %>% 
   adorn_ns(position = "front") %>%
-  rename(Section = section1)
+  rename(Section = Section)
 
 kable(salamander_props,
       caption = "Table 1. 2017 salamander counts by channel classification in old growth and clear cut sections of Mack Creek") %>% 
@@ -116,23 +116,64 @@ kable(salamander_props,
 ```{r}
 # Use chi square test to determine the significance of the difference in where in the channel salamanders are located between the two sections
 
-chi_counts <- salamander_props %>%
+chi_counts <- salamander_counts %>% 
   select(-Section)
 
 # Run chi-square:
-salamander_chi <- chisq.test(chi_counts)
+channel_chi <- chisq.test(chi_counts)
 
+channel_chi
 
 ```
 
+According to our Chi-squared test for independence, there is not a significant effect of forest condition on where in the channel salamanders are found. 
 
 
 ### Salamander weights in Mack Creek
 
 #### Comparison of salamander weights in clear cut versus old growth sections of Mack Creek in 2017
 
+```{r}
+# We use an unpaired two sample t-test to compare salamander weights in clear cut vs. old growth sections in 2017
+vertebrates_2017 <- vertebrates %>%
+    filter(year == 2017)
+
+CC_2017 <- vertebrates %>%
+  filter(section == "CC")
+  
+OG_2017 <- vertebrates %>%
+  filter(section == "OG")
+
+summary_CC_2017 <- CC_2017 %>%
+  summarize(
+    mean_weight = mean(weight, na.rm = TRUE),
+    sd_weight = sd(weight, na.rm = TRUE),
+    salamander_number = n())
+
+summary_OG_2017 <- OG_2017 %>%
+  summarize(
+    mean_weight = mean(weight, na.rm = TRUE),
+    sd_weight = sd(weight, na.rm = TRUE),
+    salamander_number = n())
+
+weight_2017_ttest <- t.test(weight ~ Section, data = vertebrates_2017)
+weight_2017_cohen <- cohen.d(weight ~ Section, data = vertebrates_2017)
+weight_2017_ttest
+
+```
+
+In 2017, the mean salamander weight at the CC sites was `r round(summary_CC_2017$mean_weight, 2)`, and the mean salamander weight at the OG sites was `r round(summary_OG_2017$mean_weight, 2)`. The mean lobster size between CC sites and OG sites did not differ significantly (t(`r round(weight_2017_ttest$parameter, 2)`) = `r round(weight_2017_ttest$statistic, 2)`, p = (`r round(weight_2017_ttest$p.value, 4)`) with a small effect size of `r round(weight_2017_cohen$estimate, 2)`. 
+
+
 
 #### Comparison of weights of salamanders in pools, cascades and side-channels of Mack Creek in 2017
+
+```{r}
+# We use a one-way ANOVA to compare the weights of salamanders in pools, cascades and side-channels of Mack Creek in 2017
+
+
+
+```
 
 
 ## Summary

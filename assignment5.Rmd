@@ -2,7 +2,7 @@
 title: Pacific giant salamander size and channel location in old growth and clear
   cut forest sections of Mack Creek, Oregon
 author: "Madeline Oliver and Lizzy Schattle"
-date: "11/23/2019"
+date: "12/2/2019"
 output: html_document
 ---
 
@@ -14,7 +14,15 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache = FA
 
 ## Introduction
 
+Ecosystem services provided by production forests of the Pacific Northwest are necessary for the health of our economy, our environment, and our society and culture. The timber extraction technique of clear cutting forests is commonly used in the Pacific Northwest region, but it has been widely criticized for negatively impacting biodiversity^[Seedre, M., Felton, A. & Lindbladh, M. What is the impact of continuous cover forestry compared to clearcut forestry on stand-level biodiversity in boreal and temperate forests? A systematic review protocol. Environ Evid 7, 28 (2018) doi:10.1186/s13750-018-0138-y]. In order to study the effects of clear cutting on biodiversity, amongst other things, researchers in Oregon have been monitoring populations of the Pacific Giant Salamander, *Dicamptodon tenebrosus* since 1993^[Gregory S. V. 2016. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present. Environmental Data Initiative. https://doi.org/10.6073/pasta/5de64af9c11579266ef20da2ff32f702. Dataset accessed 12/01/2019.].
+                                                                                                                                                                                                                 ![](HJA_photo1.jpg) ![](HJA_photo2.jpg)
+                                                                                           
+
 ## Data and Methods
+
+The ongoing data collection is monitored by researchers from Oregon State University on the H.J. Andrews Experimental Forest in the central Oregon Cascades. The two long term ecological research study sites are located in Mack Creek. One site is located in a section of forest that was clear cut circa 1963, and the other is located upstream in a 500-year-old section of coniferous forest^[Gregory S. V. 2016. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present. Environmental Data Initiative. https://doi.org/10.6073/pasta/5de64af9c11579266ef20da2ff32f702. Dataset accessed 12/01/2019.].The salamanders at each site are caught, measured, weighed, then released. The data is available via the Environmental Data Initiative under the title *Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present*. 
+
+The variables used in this report include the size (length in millimeters and weight in grams) and location, clear cut or old growth, then further sorted into the classifications of cascade, pool, isolated-pool or side-channel, from 1993 to 2017. The differences between salamander weights were determined by performing Welch's Two Sample T-tests with a 95% confidence interval and a significance level of (p = 0.05) using R studio Version 1.2.1335.
 
 ## Results
 ***

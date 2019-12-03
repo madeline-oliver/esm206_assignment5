@@ -43,7 +43,7 @@ The Pacific Giant Salamander. [Photo by Brian Chan.](https://www.flickr.com/phot
 
 ## Data and Methods
 
-The ongoing data collection is monitored by researchers from Oregon State University on the H.J. Andrews Experimental Forest in the central Oregon Cascades. The two long term ecological research study sites are located in Mack Creek. One site is located in a section of forest that was clear cut circa 1963, and the other is located upstream in a 500-year-old section of coniferous forest^[Gregory S. V. 2016. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present. Environmental Data Initiative. https://doi.org/10.6073/pasta/5de64af9c11579266ef20da2ff32f702. Dataset accessed 12/01/2019.].The salamanders at each site are caught, measured, weighed, then released. The data is available via the Environmental Data Initiative under the title *Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present*. 
+The ongoing data collection is monitored by researchers from Oregon State University on the H.J. Andrews Experimental Forest in the central Oregon Cascades. The two long term ecological research study sites are located in Mack Creek. One site is located in a section of forest that was clear cut circa 1963, and the other is located upstream in a 500-year-old section of coniferous forest.The salamanders at each site are caught, measured, weighed, then released. The data is available via the Environmental Data Initiative under the title *Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present*. 
 
                                                                                
 ```{r, echo=FALSE, out.width = "49%", out.height="20%",fig.cap="Researchers search for salamanders in Mack Creek (left) then weigh and measure the samples before release (right).",fig.show='hold',fig.align='center'}
@@ -255,8 +255,8 @@ ggplot() +
     size = 2) +
   labs(
        x = "Classification Area",
-       y = "Weight",
-       caption = "Figure 2. Pacific Giant Salamander weight distribution across three different habitat classifications in Mack Creek.") +
+       y = "Weight (g)",
+       caption = "Figure 2. Pacific Giant Salamander weight distribution across three different habitat classifications in Mack Creek. \n The mean weight for each classification is shown in green, with the standard error of the mean shown with \n vertical green lines.") +
   geom_errorbar(data = vertebrates_2017_summary,
                 aes(x = classification,
                     ymin = mean_wt - se_wt,
@@ -264,10 +264,11 @@ ggplot() +
                 width = 0.05,
                 color = "green") +
   theme_bw()
-  
 
 ```
+<br><br>
 
+fdsadffdsa 
 
 
 ## Summary

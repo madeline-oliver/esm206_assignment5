@@ -251,7 +251,7 @@ fdsadffdsa
 
 
 ```{r, include = FALSE}
-# We use a one-way ANOVA to compare the weights of salamanders in pools, cascades and side-channels of Mack Creek in 2017
+# We use a one-way ANOVA to compare the mean weights of salamanders in pools, cascades and side-channels of Mack Creek in 2017
 
 #First we visualize the distribution of weights by classification using a histogram and a qq plot
 
@@ -279,12 +279,16 @@ ggplot(data = vertebrates_2017,
 vertebrates_aov <- aov(weight ~ classification, data = vertebrates_2017_vis)
 summary(vertebrates_aov)
 
+post_hoc <- TukeyHSD(vertebrates_aov)
+post_hoc
+
 # The F value is fairly low
 
 ```
 
+The mean weights of Pacific giant salamanders differs significantly between salamanders in pools, cascades, and side-channels in 2017. 
 
-With a relatively low F value
+The mean weight of salamanders in 
 
 
 ## Summary

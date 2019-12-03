@@ -253,21 +253,20 @@ ggplot() +
                 alpha = 0.6) +
   geom_point(data = vertebrates_2017_summary,
              aes(x = classification, y = mean_wt),
-    color = "red",
+    color = "green",
     size = 2) +
-  labs(title = "fds",
+  labs(
        x = "Classification Area",
        y = "Weight",
-       caption = "Figure X. poop") +
+       caption = "Figure 2. Pacific Giant Salamander weight distribution across three different habitat classifications in Mack Creek.") +
   geom_errorbar(data = vertebrates_2017_summary,
                 aes(x = classification,
-                    ymin = mean_wt - sd_wt,
-                    ymax = mean_wt + sd_wt),
+                    ymin = mean_wt - se_wt,
+                    ymax = mean_wt + se_wt),
                 width = 0.05,
-                color = "red") +
+                color = "green") +
   theme_bw()
   
-
 
 ```
 

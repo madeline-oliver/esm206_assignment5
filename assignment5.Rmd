@@ -257,8 +257,8 @@ ggplot() +
     size = 2) +
   labs(
        x = "Classification Area",
-       y = "Weight",
-       caption = "Figure 2. Pacific Giant Salamander weight distribution across three different habitat classifications in Mack Creek.") +
+       y = "Weight (g)",
+       caption = "Figure 2. Pacific Giant Salamander weight distribution across three different habitat classifications in Mack Creek. \n The mean weight for each classification is shown in green, with the standard error of the mean shown with \n vertical green lines.") +
   geom_errorbar(data = vertebrates_2017_summary,
                 aes(x = classification,
                     ymin = mean_wt - se_wt,
@@ -266,10 +266,11 @@ ggplot() +
                 width = 0.05,
                 color = "green") +
   theme_bw()
-  
 
 ```
+<br><br>
 
+fdsadffdsa 
 
 
 ## Summary

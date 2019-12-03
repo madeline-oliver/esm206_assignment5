@@ -162,7 +162,6 @@ chi_counts <- salamander_counts %>%
 # Run chi-square:
 channel_chi <- chisq.test(chi_counts)
 
-channel_chi
 
 ```
 
@@ -198,7 +197,6 @@ summary_OG_2017 <- OG_2017 %>%
 
 weight_2017_ttest <- t.test(weight ~ Section, data = vertebrates_2017)
 weight_2017_cohen <- cohen.d(weight ~ Section, data = vertebrates_2017)
-weight_2017_ttest
 
 ```
 

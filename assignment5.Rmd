@@ -211,7 +211,7 @@ In 2017, the mean salamander weight at the clear cut sites was `r round(summary_
 # Visualize the distribution using a beeswarm
 
 vertebrates_2017_vis <- vertebrates_2017 %>%
-  filter(classification == c("Pool", "Side Channel", "Cascade"))
+  filter(classification != "Isolated Pools")
 
 vertebrates_2017_summary <- vertebrates_2017_vis %>% 
   group_by(classification) %>% 

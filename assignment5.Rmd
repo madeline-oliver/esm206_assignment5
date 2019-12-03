@@ -277,7 +277,6 @@ ggplot(data = vertebrates_2017,
 
 
 vertebrates_aov <- aov(weight ~ classification, data = vertebrates_2017_vis)
-summary(vertebrates_aov)
 
 post_hoc <- TukeyHSD(vertebrates_aov)
 post_hoc
@@ -295,6 +294,10 @@ sum_table <- vertebrates_2017_vis %>%
 
 ```
 
+<<<<<<< HEAD
+=======
+The mean weights of Pacific giant salamanders located in pools, cascades, and side channels in 2017 were X, X and X respectively in 2017. Across all three classifications there is a statistally significant difference in mean weights.However, the only statistically significant difference in mean weights in 2017 is between salamanders in side-channels and pools.  
+>>>>>>> 4e210d85f8af0d70d22bc5029ba7cc61fe1f6dde
 
 
 

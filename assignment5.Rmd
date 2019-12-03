@@ -207,26 +207,6 @@ In 2017, the mean salamander weight at the clear cut sites was `r round(summary_
 #### Salamanders weight in pools, cascades and side-channels in 2017
 
 ```{r}
-# We use a one-way ANOVA to compare the weights of salamanders in pools, cascades and side-channels of Mack Creek in 2017
-
-# First we visualize the distribution of weights by classification using a histogram and a qq plot
-
-#ggplot(data = vertebrates_2017, 
-  #     aes(x = weight)) +
- # geom_histogram(aes(fill = classification),
-      #           alpha = 0.5,
-       #          show.legend = FALSE,
-         #        bins = 15) +
- # facet_wrap(~classification, scales = "free")
-
-#ggplot(data = vertebrates_2017, 
-     #  aes(sample = weight)) +
- # geom_qq(aes(color = classification),
-            #     alpha = 0.5,
-            #     show.legend = FALSE) +
-#  facet_wrap(~classification, scales = "free")
-
-# This data does not look normally distributed, however we have a very large sample size so we will still use an ANOVA test to compare means
 
 # Visualize the distribution using a beeswarm
 
@@ -240,8 +220,7 @@ vertebrates_2017_summary <- vertebrates_2017_vis %>%
     sd_wt = sd(weight, na.rm = TRUE),
     sample_size = n(),
     se_wt= sd(weight, na.rm = TRUE) / sqrt(n()),
-    var_wt = var(weight, na.rm = TRUE)
-  )
+    var_wt = var(weight, na.rm = TRUE))
 
 
 ggplot() +
@@ -271,6 +250,43 @@ ggplot() +
 fdsadffdsa 
 
 
+```{r, include = FALSE}
+# We use a one-way ANOVA to compare the weights of salamanders in pools, cascades and side-channels of Mack Creek in 2017
+
+#First we visualize the distribution of weights by classification using a histogram and a qq plot
+
+ggplot(data = vertebrates_2017, 
+       aes(x = weight)) +
+  geom_histogram(aes(fill = classification),
+                 alpha = 0.5,
+                 show.legend = FALSE,
+                 bins = 15) +
+  facet_wrap(~classification, scales = "free")
+
+ggplot(data = vertebrates_2017, 
+       aes(sample = weight)) +
+  geom_qq(aes(color = classification),
+                 alpha = 0.5,
+                 show.legend = FALSE) +
+  facet_wrap(~classification, scales = "free")
+
+```
+
+```{r}
+# This data does not look normally distributed, however we have a very large sample size and ANOVA is relatively robust to violations of the normality assumption so we will still use an ANOVA test to compare means
+
+
+vertebrates_aov <- aov(weight ~ classification, data = vertebrates_2017_vis)
+summary(vertebrates_aov)
+
+# The F value is fairly low
+
+```
+
+
+With a relatively low F value
+
+
 ## Summary
 
 blah blah blah
@@ -280,5 +296,10 @@ blah blah blah
 ![](HJA_photo3.jpeg)
 </center> 
 
+
+
+
+
 ## References
+
 

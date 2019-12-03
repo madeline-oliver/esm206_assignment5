@@ -282,17 +282,28 @@ summary(vertebrates_aov)
 post_hoc <- TukeyHSD(vertebrates_aov)
 post_hoc
 
+
+sum_table <- vertebrates_2017_vis %>% 
+  group_by(classification) %>% 
+  summarize(
+    mean_wt = mean(weight, na.rm = TRUE),
+    salamander_number = n())
+
+
+
 # The F value is fairly low
 
 ```
 
-The mean weights of Pacific giant salamanders differs significantly between salamanders in pools, cascades, and side-channels in 2017. 
 
-The mean weight of salamanders in 
+
 
 
 ## Summary
 
+The mean weights of Pacific giant salamanders differs significantly between salamanders in pools, cascades, and side-channels in 2017. 
+
+The mean weight of salamanders in cascade, pool and side channel (`r round(sum_table$mean_wt, 2)` grams, respectively).
 blah blah blah
 
 

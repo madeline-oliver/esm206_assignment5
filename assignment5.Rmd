@@ -26,6 +26,7 @@ library(directlabels)
 library(plotly)
 library(effsize)
 library(kableExtra)
+library(ggbeeswarm)
 #library(png)
 #library(grid)
 #library(gridExtra)
@@ -34,7 +35,7 @@ library(kableExtra)
 ## Introduction
 
 Ecosystem services provided by production forests of the Pacific Northwest are necessary for the health of our economy, our environment, and our society and culture. The timber extraction technique of clear cutting forests is commonly used in the Pacific Northwest region, but it has been widely criticized for negatively impacting biodiversity^[Seedre, M., Felton, A. & Lindbladh, M. What is the impact of continuous cover forestry compared to clearcut forestry on stand-level biodiversity in boreal and temperate forests? A systematic review protocol. Environ Evid 7, 28 (2018) doi:10.1186/s13750-018-0138-y]. In order to study the effects of clear cutting on biodiversity, researchers in Oregon have been monitoring populations of the Pacific Giant Salamander, *Dicamptodon tenebrosus* since 1993^[Gregory S. V. 2016. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present. Environmental Data Initiative. https://doi.org/10.6073/pasta/5de64af9c11579266ef20da2ff32f702. Dataset accessed 12/01/2019.]. The researchers are interested in how the salamander populations are affected by the clear cutting of the amphibian's forest habitat. Habitat change has not been well studied in amphibians, even though research has shown that it contributes to population declines^[Gardner TA Barlow J Peres CA.2007.Paradox, presumption, and pitfalls in conservation biology: The importance of habitat change for amphibians and reptiles.Biological Conservation 138166–179.]. Recording changes in Pacific Giant Salamander growth and distribution could help us to better understand how habitat loss affects the biodiversity of forest as a whole, in addition to providing insights into Pacific Giant Salamander populations of the central Oregon Cascades.
-
+<br><br>
 <center>
 ![](25401905_36cfd5510d_o.jpg)
 The Pacific Giant Salamander. [Photo by Brian Chan.](https://www.flickr.com/photos/chosetec/25401905)
@@ -54,7 +55,7 @@ knitr::include_graphics(c("HJA_photo2.jpg", "HJA_photo1.jpg"))
 [Photographed by: Lina DiGregorio (Aug. 2016) for the H.J. Andrews Forest Gallery](https://andrewsforest.oregonstate.edu/gallery/forest-and-stream-research-pollinator-field-work-and-meadow-views-2015-2016)
 </center> 
 
-
+<br><br>
 The variables used in this report include the size (length in millimeters and weight in grams) and location, clear cut or old growth, then further sorted into the classifications of cascade, pool, isolated-pool or side-channel, from 1993 to 2017. The differences between salamander weights were determined by performing Welch's Two Sample T-tests with a 95% confidence interval and a significance level of (p = 0.05) using R studio Version 1.2.1335.
 
 <center>
@@ -120,6 +121,12 @@ ggplot(data = vertebrates,
 
 ```
 
+<br><br>
+
+Salamander abundance was, in general, lower in the clear cut forests than in the old growth forest from 1993 to 2014, with the populations in both sections of the forest starting low and steadily rising until around 2002, where populations decreased, then slowly increased again until around 2011, where populations declined again. In 2015, salamander abundance in clear cut forests surpassed salamander abundace in old growth forests and the populations of both increased rapidly through 2017. 
+
+<br><br>
+
 
 #### Comparison of salamander abundance by channel classification in old growth and clear cut sections of Mack Creek
 
@@ -159,7 +166,7 @@ channel_chi
 
 ```
 
-According to our Chi-squared test for independence, there is not a significant effect of forest condition on where in the channel salamanders are found. 
+According to our Chi-squared test for independence, there is not a significant effect of forest condition (cascade, pool or side channel) on where in the channel salamanders are found ( p = `r round(channel_chi$p.value, 2)`) in 2017. 
 
 
 ### Salamander weights in Mack Creek
@@ -195,7 +202,7 @@ weight_2017_ttest
 
 ```
 
-In 2017, the mean salamander weight at the clear cut sites was `r round(summary_CC_2017$mean_weight, 2)`, and the mean salamander weight at the old growth sites was `r round(summary_OG_2017$mean_weight, 2)`. The mean lobster size between clear cut sites and old growth sites did not differ significantly (t(`r round(weight_2017_ttest$parameter, 2)`) = `r round(weight_2017_ttest$statistic, 2)`, p = (`r round(weight_2017_ttest$p.value, 4)`) with a small effect size of `r round(weight_2017_cohen$estimate, 2)`. 
+In 2017, the mean salamander weight at the clear cut sites was `r round(summary_CC_2017$mean_weight, 2)`g, and the mean salamander weight at the old growth sites was `r round(summary_OG_2017$mean_weight, 2)`g. The mean lobster size between clear cut sites and old growth sites did not differ significantly (t(`r round(weight_2017_ttest$parameter, 2)`) = `r round(weight_2017_ttest$statistic, 2)`, p = (`r round(weight_2017_ttest$p.value, 4)`) with a small effect size of `r round(weight_2017_cohen$estimate, 2)`. 
 
 
 
@@ -205,23 +212,61 @@ In 2017, the mean salamander weight at the clear cut sites was `r round(summary_
 # We use a one-way ANOVA to compare the weights of salamanders in pools, cascades and side-channels of Mack Creek in 2017
 
 # First we visualize the distribution of weights by classification using a histogram and a qq plot
-ggplot(data = vertebrates_2017, 
-       aes(x = weight)) +
-  geom_histogram(aes(fill = classification),
-                 alpha = 0.5,
-                 show.legend = FALSE,
-                 bins = 15) +
-  facet_wrap(~classification, scales = "free")
 
-ggplot(data = vertebrates_2017, 
-       aes(sample = weight)) +
-  geom_qq(aes(color = classification),
-                 alpha = 0.5,
-                 show.legend = FALSE) +
-  facet_wrap(~classification, scales = "free")
+#ggplot(data = vertebrates_2017, 
+  #     aes(x = weight)) +
+ # geom_histogram(aes(fill = classification),
+      #           alpha = 0.5,
+       #          show.legend = FALSE,
+         #        bins = 15) +
+ # facet_wrap(~classification, scales = "free")
+
+#ggplot(data = vertebrates_2017, 
+     #  aes(sample = weight)) +
+ # geom_qq(aes(color = classification),
+            #     alpha = 0.5,
+            #     show.legend = FALSE) +
+#  facet_wrap(~classification, scales = "free")
 
 # This data does not look normally distributed, however we have a very large sample size so we will still use an ANOVA test to compare means
 
+# Visualize the distribution using a beeswarm
+
+vertebrates_2017_vis <- vertebrates_2017 %>%
+  filter(classification == c("Pool", "Side Channel", "Cascade"))
+
+vertebrates_2017_summary <- vertebrates_2017_vis %>% 
+  group_by(classification) %>% 
+  summarize(
+    mean_wt = mean(weight, na.rm = TRUE),
+    sd_wt = sd(weight, na.rm = TRUE),
+    sample_size = n(),
+    se_wt= sd(weight, na.rm = TRUE) / sqrt(n()),
+    var_wt = var(weight, na.rm = TRUE)
+  )
+
+
+ggplot() +
+  geom_beeswarm(data = vertebrates_2017_vis,
+                aes(x = classification, y = weight),
+                size = 1,
+                alpha = 0.6) +
+  geom_point(data = vertebrates_2017_summary,
+             aes(x = classification, y = mean_wt),
+    color = "red",
+    size = 2) +
+  labs(title = "fds",
+       x = "Classification Area",
+       y = "Weight",
+       caption = "Figure X. poop") +
+  geom_errorbar(data = vertebrates_2017_summary,
+                aes(x = classification,
+                    ymin = mean_wt - sd_wt,
+                    ymax = mean_wt + sd_wt),
+                width = 0.05,
+                color = "red") +
+  theme_bw()
+  
 
 
 ```

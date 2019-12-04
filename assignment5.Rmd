@@ -28,9 +28,8 @@ library(effsize)
 library(kableExtra)
 library(ggbeeswarm)
 library(praise)
-#library(png)
-#library(grid)
-#library(gridExtra)
+library(car)
+
 ```
 
 ## Introduction
@@ -86,10 +85,10 @@ vertebrates <- vertebrates_raw %>%
   group_by(year, section) %>%
   add_tally() %>%
   ungroup() %>%
-  mutate(Section = recode(section,
+  mutate(Section = dplyr::recode(section,
                            CC = "Clear Cut",
                            OG = "Old Growth"),
-         classification = recode(unittype,
+         classification = dplyr::recode(unittype,
                                  C = "Cascade",
                                  I = "Riffle",
                                  IP = "Isolated Pools",
@@ -254,7 +253,7 @@ fdsadffdsa
 
 #First we visualize the distribution of weights by classification using a histogram and a qq plot
 
-ggplot(data = vertebrates_2017, 
+ggplot(data = vertebrates_2017_vis, 
        aes(x = weight)) +
   geom_histogram(aes(fill = classification),
                  alpha = 0.5,
@@ -262,66 +261,67 @@ ggplot(data = vertebrates_2017,
                  bins = 15) +
   facet_wrap(~classification, scales = "free")
 
-ggplot(data = vertebrates_2017, 
+ggplot(data = vertebrates_2017_vis, 
        aes(sample = weight)) +
   geom_qq(aes(color = classification),
                  alpha = 0.5,
                  show.legend = FALSE) +
   facet_wrap(~classification, scales = "free")
 
-# This data does not look normally distributed, however we have a very large sample size and ANOVA is relatively robust to violations of the normality assumption so we will still use an ANOVA test to compare means
+# This data does not look normally distributed, however we have a very large sample size and ANOVA is relatively robust to violations of the normality assumption 
+
 
 ```
 
 ```{r}
-<<<<<<< HEAD
-=======
-# This data does not look normally distributed, however we have a very large sample size and ANOVA is relatively robust to violations of the normality assumption so we will still use an ANOVA test to compare means
->>>>>>> 981eabdb2fc26025dc4038092d1d908edd144c25
-
-vertebrates_aov <- aov(weight ~ classification, data = vertebrates_2017_vis)
-
-post_hoc <- TukeyHSD(vertebrates_aov)
-post_hoc
-
-<<<<<<< HEAD
-=======
+# Next we will check variances
 
 sum_table <- vertebrates_2017_vis %>% 
   group_by(classification) %>% 
   summarize(
     mean_wt = mean(weight, na.rm = TRUE),
-    salamander_number = n())
+    salamander_number = n(),
+    se_wt = sd(weight) / sqrt(n()),
+    var_wt = var(weight))
 
-praise()
+# Levene's statistical test for equal variance:
 
->>>>>>> 981eabdb2fc26025dc4038092d1d908edd144c25
-# The F value is fairly low
+leveneTest(weight ~ classification, 
+           data = vertebrates_2017_vis)
+
+# There is not a significant difference in variance
+
+# Run one-way ANOVA to compare group means
+
+vertebrates_aov <- aov(weight ~ classification, 
+                       data = vertebrates_2017_vis)
+summary(vertebrates_aov)
+aov_outputs <- unlist(summary(vertebrates_aov))
+
+# There is a significant difference. Now we run a post-hoc Tukey's to determine between which groups there is a significant difference in means
+
+post_hoc <- TukeyHSD(vertebrates_aov)
+post_hoc
+
+
+
+
 
 ```
 
-<<<<<<< HEAD
-The mean weights of Pacific giant salamanders located in pools, cascades, and side channels in 2017 were X, X and X respectively in 2017. Across all three classifications there is a statistally significant difference in mean weights.However, the only statistically significant difference in mean weights in 2017 is between salamanders in side-channels and pools.  
 
-The mean weight of salamanders in 
-=======
-<br>
-
-The mean weights of Pacific giant salamanders located in cascades, pools and side channels in 2017 were `r round(sum_table$mean_wt, 2)` grams, respectively in 2017. Across all three classifications there is a statistally significant difference in mean weights.However, the only statistically significant difference in mean weights in 2017 is between salamanders in side-channels and pools. 
-
-This data does not look normally distributed, however we have a very large sample size and ANOVA is relatively robust to violations of the normality assumption so we will still use an ANOVA test to compare means.
->>>>>>> 981eabdb2fc26025dc4038092d1d908edd144c25
-
-The mean weights of Pacific giant salamanders differs significantly between salamanders in pools, cascades, and side-channels in 2017. 
+The mean weights of Pacific giant salamanders located in cascades, pools and side channels in 2017 were `r round(sum_table$mean_wt, 2)` grams, respectively in 2017. Across all three classifications there is a statistally significant difference in mean weights F(`r aov_outputs[1]`, `r aov_outputs[2]`) = `r round(aov_outputs[7],2)`, *p* = `r round(aov_outputs[9],3)`). However, the only statistically significant difference in mean weights in 2017 is between salamanders in side-channels and pools. The mean weight in side-channels is 
 
 
-<<<<<<< HEAD
-blah blah blah
-=======
+
+
+
+
+
 ## Summary
 
-The mean weights of Pacific giant salamanders differs significantly between salamanders in pools, cascades, and side-channels in 2017.
->>>>>>> 981eabdb2fc26025dc4038092d1d908edd144c25
+
+
 
 
 <center> 

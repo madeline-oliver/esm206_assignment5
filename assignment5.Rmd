@@ -121,15 +121,13 @@ ggplot(data = vertebrates,
 
 ```
 
-<br><br>
+<br>
 
 Salamander abundance was, in general, lower in the clear cut forests than in the old growth forest from 1993 to 2014, with the populations in both sections of the forest starting low and steadily rising until around 2002, where populations decreased, then slowly increased again until around 2011, where populations declined again. In 2015, salamander abundance in clear cut forests surpassed salamander abundace in old growth forests and the populations of both increased rapidly through 2017. 
 
-<br><br>
-
+<br>
 
 #### Comparison of salamander abundance by channel classification in old growth and clear cut sections of Mack Creek
-
 
 ```{r}
 # Filter out salamander observations where classification in Isolated Pools, then create count table of classification and section
@@ -243,9 +241,7 @@ ggplot() +
   theme_bw()
 
 ```
-<br>
 
-fdsadffdsa 
 
 
 ```{r, include = FALSE}
@@ -286,8 +282,8 @@ sum_table <- vertebrates_2017_vis %>%
 
 # Levene's statistical test for equal variance:
 
-leveneTest(weight ~ classification, 
-           data = vertebrates_2017_vis)
+#leveneTest(weight ~ classification, 
+         #  data = vertebrates_2017_vis)
 
 # There is not a significant difference in variance
 
@@ -295,12 +291,13 @@ leveneTest(weight ~ classification,
 
 vertebrates_aov <- aov(weight ~ classification, 
                        data = vertebrates_2017_vis)
-summary(vertebrates_aov)
+#summary(vertebrates_aov)
 aov_outputs <- unlist(summary(vertebrates_aov))
 
 # There is a significant difference. Now we run a post-hoc Tukey's to determine between which groups there is a significant difference in means
 
 post_hoc <- TukeyHSD(vertebrates_aov)
+<<<<<<< HEAD
 post_hoc
 
 # Now we find the effect size using Cohen's D
@@ -314,6 +311,11 @@ sidechannel_weight <- vertebrates_2017_vis %>%
   pull(weight)
 
 cohen_weight <- cohen.d(pool_weight, sidechannel_weight, na.rm = TRUE)
+=======
+#post_hoc
+
+#praise() #for a necessary pick-me-up
+>>>>>>> 29b8167d5c641daed5562c4c45b9b8d846212f20
 
 cohen_weight
 
@@ -329,9 +331,12 @@ One concern we have regarding our comparison of means across the three classific
 
 ## Summary
 
+<<<<<<< HEAD
 - According to our study, there is no significant difference in mean Pacific gian salamander weight between old-growth and clear-cut sections of the forest or between 
 
-
+=======
+## Summary
+>>>>>>> 29b8167d5c641daed5562c4c45b9b8d846212f20
 
 
 
@@ -339,10 +344,6 @@ One concern we have regarding our comparison of means across the three classific
 <center> 
 ![](HJA_photo3.jpeg)
 </center> 
-
-
-
-
 
 ## References
 

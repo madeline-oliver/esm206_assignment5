@@ -286,7 +286,7 @@ sum_table <- vertebrates_2017_vis %>%
     mean_wt = mean(weight, na.rm = TRUE),
     salamander_number = n())
 
-praise()
+praise() #for a necessary pick-me-up
 
 # The F value is fairly low
 
@@ -300,19 +300,13 @@ This data does not look normally distributed, however we have a very large sampl
 
 The mean weights of Pacific giant salamanders differs significantly between salamanders in pools, cascades, and side-channels in 2017. 
 
-
 ## Summary
 
 The mean weights of Pacific giant salamanders differs significantly between salamanders in pools, cascades, and side-channels in 2017.
 
-
 <center> 
 ![](HJA_photo3.jpeg)
 </center> 
-
-
-
-
 
 ## References
 

@@ -163,8 +163,7 @@ channel_chi <- chisq.test(chi_counts)
 
 ```
 
-According to our Chi-squared test for independence, there is not a significant effect of forest condition (cascade, pool or side channel) on where in the channel salamanders are found ( p = `r round(channel_chi$p.value, 2)`) in 2017. 
-
+According to our Chi-squared test for independence, there is not a significant difference in where the salamanders are located (cascade, pool or side channel) between old growth and clear cut forest sections ( p = `r round(channel_chi$p.value, 2)`) in 2017.
 
 ### Salamander weights in Mack Creek
 
@@ -270,6 +269,7 @@ ggplot(data = vertebrates_2017_vis,
 ```
 
 ```{r}
+
 # Next we will check variances
 
 sum_table <- vertebrates_2017_vis %>% 
@@ -297,7 +297,7 @@ aov_outputs <- unlist(summary(vertebrates_aov))
 # There is a significant difference. Now we run a post-hoc Tukey's to determine between which groups there is a significant difference in means
 
 post_hoc <- TukeyHSD(vertebrates_aov)
-<<<<<<< HEAD
+
 post_hoc
 
 # Now we find the effect size using Cohen's D
@@ -311,11 +311,10 @@ sidechannel_weight <- vertebrates_2017_vis %>%
   pull(weight)
 
 cohen_weight <- cohen.d(pool_weight, sidechannel_weight, na.rm = TRUE)
-=======
+
 #post_hoc
 
 #praise() #for a necessary pick-me-up
->>>>>>> 29b8167d5c641daed5562c4c45b9b8d846212f20
 
 cohen_weight
 
@@ -331,15 +330,11 @@ One concern we have regarding our comparison of means across the three classific
 
 ## Summary
 
-<<<<<<< HEAD
-- According to our study, there is no significant difference in mean Pacific gian salamander weight between old-growth and clear-cut sections of the forest or between 
+- According to our study, there is no significant difference in mean Pacific Giant Salamander weight between old-growth and clear-cut sections of the forest
 
-=======
-## Summary
->>>>>>> 29b8167d5c641daed5562c4c45b9b8d846212f20
+- There is also no difference between mean salamander weight between pools and cascades and cascades and side-channels, but there is a significant difference in weight betwen salamanders in side-channels and pools
 
-
-
+- There is no significant difference in where the salamanders are located (cascade, pool or side channel) between old growth and clear cut forest sections
 
 <center> 
 ![](HJA_photo3.jpeg)

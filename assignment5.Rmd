@@ -266,10 +266,6 @@ ggplot(data = vertebrates_2017_vis,
 
 # This data does not look normally distributed, however we have a very large sample size and ANOVA is relatively robust to violations of the normality assumption 
 
-
-```
-
-```{r}
 # Next we will check variances
 
 sum_table <- vertebrates_2017_vis %>% 
@@ -282,11 +278,14 @@ sum_table <- vertebrates_2017_vis %>%
 
 # Levene's statistical test for equal variance:
 
-#leveneTest(weight ~ classification, 
-         #  data = vertebrates_2017_vis)
+leveneTest(weight ~ classification, 
+           data = vertebrates_2017_vis)
 
 # There is not a significant difference in variance
 
+```
+
+```{r, include = FALSE}
 # Run one-way ANOVA to compare group means
 
 vertebrates_aov <- aov(weight ~ classification, 
@@ -297,7 +296,6 @@ aov_outputs <- unlist(summary(vertebrates_aov))
 # There is a significant difference. Now we run a post-hoc Tukey's to determine between which groups there is a significant difference in means
 
 post_hoc <- TukeyHSD(vertebrates_aov)
-<<<<<<< HEAD
 post_hoc
 
 # Now we find the effect size using Cohen's D
@@ -311,11 +309,6 @@ sidechannel_weight <- vertebrates_2017_vis %>%
   pull(weight)
 
 cohen_weight <- cohen.d(pool_weight, sidechannel_weight, na.rm = TRUE)
-=======
-#post_hoc
-
-#praise() #for a necessary pick-me-up
->>>>>>> 29b8167d5c641daed5562c4c45b9b8d846212f20
 
 cohen_weight
 
@@ -331,12 +324,8 @@ One concern we have regarding our comparison of means across the three classific
 
 ## Summary
 
-<<<<<<< HEAD
-- According to our study, there is no significant difference in mean Pacific gian salamander weight between old-growth and clear-cut sections of the forest or between 
 
-=======
-## Summary
->>>>>>> 29b8167d5c641daed5562c4c45b9b8d846212f20
+- According to our study, there is no significant difference in mean Pacific gian salamander weight between old-growth and clear-cut sections of the forest or between 
 
 
 

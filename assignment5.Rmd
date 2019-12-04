@@ -265,11 +265,14 @@ ggplot(data = vertebrates_2017_vis,
 
 # This data does not look normally distributed, however we have a very large sample size and ANOVA is relatively robust to violations of the normality assumption 
 
+<<<<<<< HEAD
 
 ```
 
 ```{r}
 
+=======
+>>>>>>> 3aaebec0d7f18bd94aa11e0b9bd99b23e1cb0d22
 # Next we will check variances
 
 sum_table <- vertebrates_2017_vis %>% 
@@ -282,11 +285,14 @@ sum_table <- vertebrates_2017_vis %>%
 
 # Levene's statistical test for equal variance:
 
-#leveneTest(weight ~ classification, 
-         #  data = vertebrates_2017_vis)
+leveneTest(weight ~ classification, 
+           data = vertebrates_2017_vis)
 
 # There is not a significant difference in variance
 
+```
+
+```{r, include = FALSE}
 # Run one-way ANOVA to compare group means
 
 vertebrates_aov <- aov(weight ~ classification, 
@@ -297,7 +303,10 @@ aov_outputs <- unlist(summary(vertebrates_aov))
 # There is a significant difference. Now we run a post-hoc Tukey's to determine between which groups there is a significant difference in means
 
 post_hoc <- TukeyHSD(vertebrates_aov)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3aaebec0d7f18bd94aa11e0b9bd99b23e1cb0d22
 post_hoc
 
 # Now we find the effect size using Cohen's D
@@ -311,10 +320,13 @@ sidechannel_weight <- vertebrates_2017_vis %>%
   pull(weight)
 
 cohen_weight <- cohen.d(pool_weight, sidechannel_weight, na.rm = TRUE)
+<<<<<<< HEAD
 
 #post_hoc
 
 #praise() #for a necessary pick-me-up
+=======
+>>>>>>> 3aaebec0d7f18bd94aa11e0b9bd99b23e1cb0d22
 
 cohen_weight
 
@@ -330,7 +342,13 @@ One concern we have regarding our comparison of means across the three classific
 
 ## Summary
 
+<<<<<<< HEAD
 - According to our study, there is no significant difference in mean Pacific Giant Salamander weight between old-growth and clear-cut sections of the forest
+=======
+
+- According to our study, there is no significant difference in mean Pacific gian salamander weight between old-growth and clear-cut sections of the forest or between 
+
+>>>>>>> 3aaebec0d7f18bd94aa11e0b9bd99b23e1cb0d22
 
 - There is also no difference between mean salamander weight between pools and cascades and cascades and side-channels, but there is a significant difference in weight betwen salamanders in side-channels and pools
 

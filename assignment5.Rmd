@@ -303,22 +303,34 @@ aov_outputs <- unlist(summary(vertebrates_aov))
 post_hoc <- TukeyHSD(vertebrates_aov)
 post_hoc
 
+# Now we find the effect size using Cohen's D
 
+pool_weight <- vertebrates_2017_vis %>%
+  filter(classification == "Pool") %>%
+  pull(weight)
 
+sidechannel_weight <- vertebrates_2017_vis %>%
+  filter(classification == "Side Channel") %>%
+  pull(weight)
 
+cohen_weight <- cohen.d(pool_weight, sidechannel_weight, na.rm = TRUE)
+
+cohen_weight
 
 ```
 
+The mean weights of Pacific giant salamanders located in cascades, pools and side channels in 2017 were `r round(sum_table$mean_wt, 2)` grams, respectively in 2017. Across all three classifications there is a statistally significant difference in mean weights F(`r aov_outputs[1]`, `r aov_outputs[2]`) = `r round(aov_outputs[7],2)`, *p* = `r round(aov_outputs[9],3)`). 
 
-The mean weights of Pacific giant salamanders located in cascades, pools and side channels in 2017 were `r round(sum_table$mean_wt, 2)` grams, respectively in 2017. Across all three classifications there is a statistally significant difference in mean weights F(`r aov_outputs[1]`, `r aov_outputs[2]`) = `r round(aov_outputs[7],2)`, *p* = `r round(aov_outputs[9],3)`). However, the only statistically significant difference in mean weights in 2017 is between salamanders in side-channels and pools. The mean weight in side-channels is 
+However, a post hoc Tukey's test found that the only statistically significant difference in mean weights in 2017 is between salamanders in side-channels and pools *p* = `r round(post_hoc$classification[12],3)` with a small effect size (`r cohen_weight$estimate`).
 
-
-
-
+One concern we have regarding our comparison of means across the three classifications is that, when plotted, our data does not look normally distributed and features numerous outliers. We decided to follow through with an ANOVA test anyway because we have a very large sample size and ANOVA is relatively robust to violations of the normality assumption. However, moving forward we could run an additional ANOVA using sample medians instead of means since they will be less skewed by outliers.
 
 
 
 ## Summary
+
+- According to our study, there is no significant difference in mean Pacific gian salamander weight between old-growth and clear-cut sections of the forest or between 
+
 
 
 
